@@ -3,15 +3,27 @@ function init(){
 
 let intentos = 6;
 // let ganado = 0;
-let diccionario = ['PIZZA', 'VEJEZ', 'FEROZ', 'FREZA', 'VELOZ', 'BAZAR', 'JUEZS', 'c']
-// Obtenemos una palabr aleatoria de diccionario
-const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
-console.log(palabra);
+// let diccionario = ['PIZZA', 'VEJEZ', 'FEROZ', 'FREZA', 'VELOZ', 'BAZAR', 'JUEZS', 'c']
+// // Obtenemos una palabr aleatoria de diccionario
+// const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
+// console.log(palabra);
 // Usamos local storage para guardar el puntaje
 // localStorage.setItem('puntos', ganado);
 // let puntos = localStorage.getItem('puntos');
 // let puntosInt = parseInt(puntos);
 // console.log(puntosInt); 
+let palabra = "";
+let palabraUrl = "https://clientes.api.greenborn.com.ar/public-random-word?c=9&l=5";
+// creramos el fetch para obtener los datos de la api
+fetch(palabraUrl)
+  .then(response => response.json())
+  .then(data =>{
+    let dat = data[0];
+    palabra = dat.toUpperCase();
+    console.log(palabra);
+  })
+  .catch(error => console.error(error))
+  console.log(palabra); 
 
 
 
