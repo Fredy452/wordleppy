@@ -1,32 +1,63 @@
+window.addEventListener('load', init);
+function init(){
+
 let intentos = 6;
-let ganado = 0;
-let diccionario = ['APPLE', 'HURLS', 'WINGS', 'YOUTH']
+// let ganado = 0;
+let diccionario = ['PIZZA', 'VEJEZ', 'FEROZ', 'FREZA', 'VELOZ', 'BAZAR', 'JUEZS', 'c']
 // Obtenemos una palabr aleatoria de diccionario
 const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
+console.log(palabra);
+// Usamos local storage para guardar el puntaje
+// localStorage.setItem('puntos', ganado);
+// let puntos = localStorage.getItem('puntos');
+// let puntosInt = parseInt(puntos);
+// console.log(puntosInt); 
+
+
 
 
 
 // Definimos las constantes
 const button = document.getElementById("guess-button");
 const input = document.getElementById("guess-input");
-const valor = input.value;
+const ERROR = document.getElementById("error");
 const VIDA = document.getElementById("vida");
 VIDA.innerHTML = intentos;
 
-window.addEventListener('load', init);
-function init(){
+button.addEventListener('click', validarInput);
+input.addEventListener('keyup', () => {
+        ERROR.innerHTML = "";
+        input.style.borderColor = '#ccc';
+    if (event.key === 'Enter') {
+        validarInput();
+    }
+});
+function validarInput() {
+    const palabra = leerIntento();
+    const LETRAS = /^[a-zA-Z]+$/;
+    if (palabra.length > 5) {
+        ERROR.innerHTML = "*Ingrese 5 caracteres";
+        input.style.borderColor = 'red';
+    } else if(!LETRAS.test(palabra)){
+        ERROR.innerHTML = "*Solo se admite letras";
+        input.style.borderColor = 'red';
+    } else if (palabra.length < 5) {
+        ERROR.innerHTML = "*No agregaste todos las letras";
+        input.style.borderColor = 'red';
+    }
+    else {
+        ERROR.innerHTML = "";
+        input.style.borderColor = '#ccc';
+        intentar();
+    }
+}
     // Definimos la fucion intentar que va ser invocado desde el boton
     function intentar(){    
         const INTENTO = leerIntento();
-
         // Creamos un nuevo div con la clase row para injectar al grid
         const GRID = document.getElementById("grid");
         const ROW = document.createElement('div');
         ROW.className = 'row';
-        // validar imput
-        const LETRAS = /^[a-zA-Z]+$/;
-        if (INTENTO !== "" && LETRAS.test(INTENTO)) {
-            // Creamos el algoritmo principal 
             if (INTENTO === palabra ) {
                 for (let i in palabra) {
                     const SPAN = document.createElement('div');
@@ -41,6 +72,10 @@ function init(){
                     }
                     ROW.appendChild(SPAN);
                 }
+                // puntosInt ++;
+                // localStorage.setItem('puntos', ganado);
+                //     intentos--;
+
                 GRID.appendChild(ROW);
                 terminar("<h1>GANASTE!😀</h1>")
                 return
@@ -80,16 +115,12 @@ function init(){
                 // borramos lo que hay dentro del imput
                 input.value = "";
                 // Por cada for ejecutado se esta un intento
-                    intentos--;
-                    VIDA.innerHTML = intentos;
+                intentos --;
+                VIDA.innerHTML = intentos;
                 if (intentos==0){
                     terminar("<h3>PERDISTE!😖 La palabra era "+ palabra + "</h3>")
                 }
             }
-
-        } else {
-            alert("Solo ingrese letras");
-        }
 
         // Creamos la función terminar en caso de que si ganamos o perdemos
         function terminar(mensaje){
@@ -111,11 +142,5 @@ function init(){
         intento = intento.toUpperCase(); 
         return intento;
     }
-    
-    
-    // evento que va allamar a la funcion intento
-    button.addEventListener("click", intentar);
 
-   
-      
 }

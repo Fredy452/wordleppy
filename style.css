@@ -33,7 +33,7 @@ h1 {
 
  #guess-input {
    display: block;
-   margin: 0 auto 20px;
+   margin: 0 auto 1px;
    padding: 10px;
    font-size: 18px;
    width: 250px;
@@ -49,14 +49,25 @@ h1 {
  #guess-button {
    display: block;
    margin: 0 auto;
+   margin-top: 20px;
    padding: 10px 20px;
    font-size: 18px;
    background-color: #0CBABA;
    color: #fff;
    border: none;
    border-radius: 3px;
+   cursor: pointer;
+   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+ } 
+ #error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-items:center;
+  color: rgb(247, 70, 70);
+  font-size: 14px;
+  font-weight: bold;
  }
-    
  button:active {
  	transform: scale(0.95);
  }
